@@ -27,6 +27,8 @@ impl Config {
             },
             system: System {
                 encoding: String::new(),
+                logging: String::new(),
+                log_file_path: String::new(),
             },
             security: Security {
                 allowed_methods: String::new(),
@@ -58,6 +60,8 @@ pub struct Server {
 #[derive(Deserialize)]
 pub struct System {
     pub encoding: String,
+    pub logging: String,
+    pub log_file_path: String,
 }
 
 #[derive(Deserialize)]

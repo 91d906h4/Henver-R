@@ -28,9 +28,12 @@ pub fn entry(code: i8, mut message: String, exits: bool, shows: bool, logs: bool
         message = String::from("No error message provided.");
     }
 
+    // Generate message.
+    message = format!("{} {} | {}", header, time, message);
+
     // Show message on console.
     if shows {
-        println!("{} {} | {}", header, time, message);
+        println!("{}", message);
     }
 
     // Log message.

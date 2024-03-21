@@ -27,6 +27,10 @@ append_ser_name = "enable"
 # Set which encoding to while handling the files.
 encoding        = "UTF-8"
 
+# Enable to log system events.
+logging         = "enable"
+log_file_path   = "log.txt"
+
 # Security
 [security]
 # Using comma (,) to seprate allowed methods.

@@ -7,6 +7,7 @@ mod datastruct;
 
 use datastruct::Config;
 use std::{
+    thread,
     io::Read,
     net::{TcpListener, TcpStream}
 };
@@ -16,10 +17,10 @@ fn main() {
     let config: Config = config::read();
 
     // Get address.
-    let address: String = format!("{}:{}", config.server.host, config.server.port);
+    let address: &str = &format!("{}:{}", config.server.host, config.server.port);
 
     // Create listener.
-    let listener: TcpListener = TcpListener::bind(address.clone()).unwrap();
+    let listener: TcpListener = TcpListener::bind(address).unwrap();
 
     // Welcome message.
     println!("Thank you for using Henver-R HTTP server!");
@@ -30,7 +31,7 @@ fn main() {
     for stream in listener.incoming() {
         match stream {
             Ok(request) => {
-                std::thread::spawn(move || index(request));
+                thread::spawn(move || index(request));
             },
             Err(error) => {
                 logger::entry(1, error.to_string(), false, true, true);
@@ -43,7 +44,7 @@ fn index(mut request: TcpStream) {
     // Client address.
     let client_address: String = request.peer_addr().unwrap().to_string();
 
-    logger::entry(3, format!("Connection from {}.", client_address).to_string(), false, false, true);
+    logger::entry(3, format!("Connection from {}.", client_address), false, false, true);
 
     // HTTP request.
     let mut buffer: [u8; 1024] = [0; 1024];
