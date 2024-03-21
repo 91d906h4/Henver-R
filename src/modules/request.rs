@@ -25,6 +25,11 @@ pub fn entry(client_address: &str, http_request: &str) -> RequestParam {
         else if line.starts_with("User-Agent") {
             let (_, temp) = line.split_once(' ').unwrap();
             request_param.user_agent = temp.trim().to_string();
+
+            // In normal case, HTTP method should be in front of User-Agent.
+            // So we can implement early stop if user agent is found to achieve
+            // higher performance.
+            break;
         }
     }
     

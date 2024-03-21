@@ -6,7 +6,7 @@ use std::collections::HashMap;
 pub fn recongnize(extension: &str) -> (&'static str, &'static str) {
     // Check if client request for a folder.
     if extension == "" {
-        return ("FOLDER", "text/html");
+        return ("FOLDER", "");
     }
 
     let map: HashMap<&str, (&str, &str)> = HashMap::from([
@@ -102,9 +102,7 @@ pub fn recongnize(extension: &str) -> (&'static str, &'static str) {
         return *map.get(extension).unwrap();
     }
 
-    // By defualt, Henver-R will return an 404 error page.
-    // So the content type is set to "text/html".
-    return ("UNKNOWN", "text/html");
+    return ("UNKNOWN", "");
 
     // RFC 2046
     // The "octet-stream" subtype is used to indicate that a body contains arbitrary binary data.

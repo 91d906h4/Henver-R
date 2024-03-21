@@ -23,29 +23,29 @@ pub fn entry(mut request_param: RequestParam, request: TcpStream) -> RequestPara
     }
 
     // Check request length.
-    if config.security.max_url_len != -1 {
-        if request_param.query.len() > config.security.max_url_len as usize {
-            // Shutdown connection.
-            // request.shutdown(std::net::Shutdown::Both).unwrap();
+    if config.security.max_url_len == -1 {
+        // Pass if max length is setted to -1.
+    }
+    else if request_param.query.len() > config.security.max_url_len as usize {
+        // Shutdown connection.
+        // request.shutdown(std::net::Shutdown::Both).unwrap();
 
-            request_param.http_code = 414;
-    
-            logger::entry(2, "Got too long request.".to_string(), false, true, true);
-        }
+        request_param.http_code = 414;
+
+        logger::entry(2, "Got too long request.".to_string(), false, true, true);
     }
 
     // Clear percenrage encoding.
     if config.security.clear_url_penc == "enable" {
         let mut temp: String = request_param.query;
-        let mut check: String = temp.clone();
 
         // Remove all percentage encoding chars.
         while temp.contains('%') {
+            let check: &str = &temp.clone();
             temp = decode(&temp).expect("utf-8").to_string();
 
             // Check if the string is not changed.
             if temp == check { break; }
-            else { check = temp.clone(); }
         }
 
         request_param.query = temp;
@@ -53,8 +53,6 @@ pub fn entry(mut request_param: RequestParam, request: TcpStream) -> RequestPara
 
     // Clear illegal chars.
     if config.security.url_only_alnum == "enable" {
-        let mut temp: String = String::new();
-
         // Chars map.
         let map: HashSet<char> = HashSet::from([
             // 0 - 9
@@ -74,6 +72,8 @@ pub fn entry(mut request_param: RequestParam, request: TcpStream) -> RequestPara
             '_', '?', '&', '/', '=', '-', '.', ':', '+', '(',
             ')', '#',
         ]);
+
+        let mut temp: String = String::new();
 
         // Filter illegal chars.
         for i in request_param.query.chars() {

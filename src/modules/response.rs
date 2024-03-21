@@ -71,6 +71,7 @@ fn content_reader(request_param: &mut RequestParam) -> Vec<u8> {
     else if request_param.file_type == "FOLDER" {
         // Pass if client request a folder.
         request_param.http_code = 403;
+        request_param.content_type = String::from("text/html");
     }
     else if Path::new(format!("{}{}", ROOT, request_param.file).as_str()).exists() {
         // Check if file exists.
@@ -79,6 +80,7 @@ fn content_reader(request_param: &mut RequestParam) -> Vec<u8> {
     else {
         // Otherwise, return 404.
         request_param.http_code = 404;
+        request_param.content_type = String::from("text/html");
     }
 
     let filepath: String = match request_param.http_code {

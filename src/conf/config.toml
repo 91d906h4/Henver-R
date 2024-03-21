@@ -25,13 +25,14 @@ append_ser_name = "enable"
 # System
 [system]
 # Set which encoding to while handling the files.
-encoding        = "utf-8"
+encoding        = "UTF-8"
 
 # Security
 [security]
 # Using comma (,) to seprate allowed methods.
 # Or using "all" to allow any HTTP methods.
 # The connections with illegal methods will be closed and response nothing.
+# The allowed methods are: GET, POST, HEAD, and PUT.
 allowed_methods = "get,post"
 
 # Enable to filter or redirect the queries that tend to do directory traversal.
