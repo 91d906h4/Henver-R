@@ -9,7 +9,6 @@ use std::io::Write;
 use std::path::Path;
 use std::net::TcpStream;
 use chrono::prelude::Local;
-use std::collections::HashSet;
 
 // Set static value.
 const ROOT: &str = "src/public/";
@@ -103,15 +102,15 @@ fn content_reader(request_param: &mut RequestParam) -> Vec<u8> {
         _ => config.server.e404_page,
     };
 
-    let media_file: HashSet<&str> = HashSet::from(["IMG", "VID", "AUD", "FNT"]);
-
-    if media_file.contains(request_param.file_type.as_str()) {
-        // Read as bytes if file is a media file (image, video, audio, and font).
-        return fs::read(format!("{}{}", ROOT, filepath)).unwrap();
+    if request_param.file_type == "TXT" {
+        // Read as string if file is a text file.
+        // (Only text file needs to be read as string)
+        return fs::read_to_string(format!("{}{}", ROOT, filepath)).unwrap().into();
     }
     else {
-        // Read as string if file is a text file.
-        return fs::read_to_string(format!("{}{}", ROOT, filepath)).unwrap().into();
+        // Read as bytes if file is a media file (image, video, audio, and font)
+        // or the file type is application or unknown.
+        return fs::read(format!("{}{}", ROOT, filepath)).unwrap();
     }
     
 }

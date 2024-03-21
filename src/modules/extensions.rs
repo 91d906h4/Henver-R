@@ -48,7 +48,6 @@ pub fn recongnize(extension: &str) -> (&'static str, &'static str) {
         (".gz",         ("APP", "application/gzip")),
         (".hqx",        ("APP", "application/mac-binhex40")),
         (".img",        ("APP", "application/octet-stream")),
-
         (".iso",        ("APP", "application/octet-stream")),
         (".jar",        ("APP", "application/java-archive")),
         (".jardiff",    ("APP", "application/x-java-archive-diff")),
@@ -162,9 +161,7 @@ pub fn recongnize(extension: &str) -> (&'static str, &'static str) {
         return *map.get(extension).unwrap();
     }
 
-    return ("UNKNOWN", "");
-
     // RFC 2046
     // The "octet-stream" subtype is used to indicate that a body contains arbitrary binary data.
-    // return ("UNKNOWN", "application/octet-stream");
+    return ("UNKNOWN", "application/octet-stream");
 }
