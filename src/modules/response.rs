@@ -22,7 +22,7 @@ pub fn entry(mut request_param: RequestParam, mut request: TcpStream) {
     // Server name.
     let mut server_name: String = String::new();
     if config.server.append_ser_name == "enable" {
-        server_name = format!("Server: Hanver-R {}\r\n", VERSION);
+        server_name = format!("Server: Henver-R {}\r\n", VERSION);
     }
 
     // Get file contents.

@@ -102,7 +102,7 @@ pub fn recongnize(extension: &str) -> (&'static str, &'static str) {
         return *map.get(extension).unwrap();
     }
 
-    // By defualt, Hanver-R will return an 404 error page.
+    // By defualt, Henver-R will return an 404 error page.
     // So the content type is set to "text/html".
     return ("UNKNOWN", "text/html");
 

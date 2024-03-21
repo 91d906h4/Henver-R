@@ -22,8 +22,8 @@ fn main() {
     let listener: TcpListener = TcpListener::bind(address.clone()).unwrap();
 
     // Welcome message.
-    println!("Thank you for using Hanver-R HTTP server!");
-    println!("Hanver-R is now listening on {}.", address);
+    println!("Thank you for using Henver-R HTTP server!");
+    println!("Henver-R is now listening on {}.", address);
     println!("Use CTRL+C to stop the server.");
 
     // Accept connections from clients.

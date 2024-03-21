@@ -1,4 +1,4 @@
-# Hanver-R
+# Henver-R
 
 This is a simple HTTP server build with Rust.<br />
 It is used to host static websites created with React, Vue.js, etc.
