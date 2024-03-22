@@ -5,13 +5,28 @@ use crate::config;
 use crate::logger;
 use crate::datastruct::{Config, RequestParam};
 
+use std::fs;
 use urlencoding::decode;
 use std::net::TcpStream;
 use std::collections::HashSet;
 
-pub fn entry(mut request_param: RequestParam, request: TcpStream) -> RequestParam {
+pub fn entry(client_address: &str, mut request_param: RequestParam, request: TcpStream) -> RequestParam {
     // Get configuration.
     let config: Config = config::read();
+
+    // Check if client is banned.
+    // if config.security.ban_ip_addr {
+    //     let client_address = &client_address[0..client_address.find(':').unwrap_or(client_address.len())];
+
+    //     for ip in fs::read_to_string("src/conf/banned_ip.txt").unwrap().lines() {
+    //         if client_address == ip {
+    //             // Shutdown connection.
+    //             request.shutdown(std::net::Shutdown::Both).unwrap();
+        
+    //             logger::entry(2, "Got connection from banned IP address.".to_string(), false, true, true);
+    //         }
+    //     }
+    // }
 
     // Check HTTP methods.
     if config.security.allowed_methods != "all" &&

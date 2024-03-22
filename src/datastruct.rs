@@ -1,7 +1,7 @@
 use serde_derive::Deserialize;
 
 // Config.
-#[derive(Deserialize)]
+#[derive(Clone, Deserialize)]
 pub struct Config {
     pub server: Server,
     pub system: System,
@@ -36,12 +36,13 @@ impl Config {
                 clear_url_penc: String::new(),
                 url_only_alnum: String::new(),
                 max_url_len: 0,
+                ban_ip_addr: true,
             },
         }
     }
 }
 
-#[derive(Deserialize)]
+#[derive(Clone, Deserialize)]
 pub struct Server {
     pub host: String,
     pub port: u16,
@@ -57,20 +58,21 @@ pub struct Server {
     pub append_ser_name: String,
 }
 
-#[derive(Deserialize)]
+#[derive(Clone, Deserialize)]
 pub struct System {
     pub encoding: String,
     pub logging: String,
     pub log_file_path: String,
 }
 
-#[derive(Deserialize)]
+#[derive(Clone, Deserialize)]
 pub struct Security {
     pub allowed_methods: String,
     pub dir_trav_filter: String,
     pub clear_url_penc: String,
     pub url_only_alnum: String,
     pub max_url_len: i32,
+    pub ban_ip_addr: bool,
 }
 
 // Request parameter.

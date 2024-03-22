@@ -7,9 +7,7 @@ mod datastruct;
 
 use datastruct::Config;
 use std::{
-    thread,
-    io::Read,
-    net::{TcpListener, TcpStream}
+    io::Read, net::{TcpListener, TcpStream}, sync::Arc, thread
 };
 
 fn main() {
@@ -31,7 +29,8 @@ fn main() {
     for stream in listener.incoming() {
         match stream {
             Ok(request) => {
-                thread::spawn(move || index(request));
+                let config_clone: Arc<Config> = Arc::new(config.clone());
+                thread::spawn(move || index(request, config_clone));
             },
             Err(error) => {
                 logger::entry(1, error.to_string(), false, true, true);
@@ -40,7 +39,7 @@ fn main() {
     }
 }
 
-fn index(mut request: TcpStream) {
+fn index(mut request: TcpStream, config: Arc<Config>) {
     // Client address.
     let client_address: String = request.peer_addr().unwrap().to_string();
 

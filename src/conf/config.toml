@@ -2,7 +2,7 @@
 [server]
 # The address and port of this server.
 host            = "127.0.0.1"
-port            = 8080
+port            = 8081
 
 # The default page should be a file.
 default_page    = "index.html"
@@ -47,6 +47,9 @@ clear_url_penc  = "enable"
 
 # Enable to remove all characters in URL except a-z, A-Z, 0-1, _, ?, &, /, =, -, ., :, +, (, ), and #.
 url_only_alnum  = "enable"
+
+# Enable to banned connection from IP addresses in ./conf/banned_ip.txt.
+ban_ip_addr     = true
 
 # Set the max length of URL to be accepted.
 # Set max_url_len to -1 to aceept all requests.

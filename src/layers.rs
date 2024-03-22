@@ -32,7 +32,7 @@ pub fn entry(request: TcpStream, http_request: &str, client_address: &str) {
     let request_param: RequestParam = request::entry(&client_address, &http_request);
 
     // Security check.
-    let request_param: RequestParam = security::entry(request_param, request.try_clone().unwrap());
+    let request_param: RequestParam = security::entry(&client_address, request_param, request.try_clone().unwrap());
 
     // Query parse.
     let request_param: RequestParam = queryparse::entry(request_param);
