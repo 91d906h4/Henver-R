@@ -16,7 +16,7 @@ use std::{
 const ROOT: &str = "src/public/";
 const VERSION: &str = "1.1.0";
 
-pub fn entry(mut request_param: RequestParam, mut request: TcpStream, config: &Config) {
+pub fn entry(mut request_param: RequestParam, mut stream: TcpStream, config: &Config) {
     // Server name.
     let mut server_name: String = String::new();
     if config.server.append_ser_name {
@@ -43,12 +43,12 @@ pub fn entry(mut request_param: RequestParam, mut request: TcpStream, config: &C
     );
 
     // Send header.
-    request.write(header.as_bytes()).unwrap();
+    stream.write(header.as_bytes()).unwrap();
 
     // Send Content.
-    request.write(&content).unwrap();
+    stream.write(&content).unwrap();
 
-    request.flush().unwrap();
+    stream.flush().unwrap();
 }
 
 fn content_reader(request_param: &mut RequestParam) -> Vec<u8> {

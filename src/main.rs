@@ -33,9 +33,9 @@ fn main() {
     // Accept connections from clients.
     for stream in listener.incoming() {
         match stream {
-            Ok(request) => {
+            Ok(stream) => {
                 let config: Config = config.clone();
-                thread::spawn(move || index(request, &config));
+                thread::spawn(move || index(stream, &config));
             },
             Err(error) => {
                 logger::entry(1, error.to_string(), false, true, true);
@@ -44,19 +44,20 @@ fn main() {
     }
 }
 
-fn index(mut request: TcpStream, config: &Config) {
+fn index(mut stream: TcpStream, config: &Config) {
     // Client address.
-    let client_address: String = request.peer_addr().unwrap().to_string();
+    let client_address: String = stream.peer_addr().unwrap().to_string();
 
     logger::entry(3, format!("Connection from {}.", client_address), false, false, true);
 
     // HTTP request.
     let mut buffer: [u8; 1024] = [0; 1024];
-    request.read(&mut buffer).unwrap();
+    stream.read(&mut buffer).unwrap();
 
     // Get HTTP request.
     let http_request: String = String::from_utf8_lossy(&buffer).to_string();
+    println!("{}", http_request.len());
 
     // Enter layers.
-    layers::entry(request, &http_request, &client_address, &config);
+    layers::entry(stream, &http_request, &client_address, &config);
 }

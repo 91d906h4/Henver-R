@@ -11,7 +11,7 @@ use std::{
     collections::HashSet,
 };
 
-pub fn entry(client_address: &str, mut request_param: RequestParam, request: TcpStream, config: &Config) -> RequestParam {
+pub fn entry(client_address: &str, mut request_param: RequestParam, stream: TcpStream, config: &Config) -> RequestParam {
     // Check if client is banned.
     if config.security.ban_ip_addr {
         let client_address = &client_address[0..client_address.find(':').unwrap_or(client_address.len())];
@@ -19,7 +19,7 @@ pub fn entry(client_address: &str, mut request_param: RequestParam, request: Tcp
         for ip in fs::read_to_string("src/conf/banned_ip.txt").unwrap().lines() {
             if client_address == ip {
                 // Shutdown connection.
-                request.shutdown(std::net::Shutdown::Both).unwrap();
+                stream.shutdown(std::net::Shutdown::Both).unwrap();
         
                 logger::entry(2, "Got connection from banned IP address.".to_string(), false, true, true);
             }
@@ -30,7 +30,7 @@ pub fn entry(client_address: &str, mut request_param: RequestParam, request: Tcp
     if config.security.allowed_methods != "all" &&
        !config.security.allowed_methods.contains(request_param.method.to_lowercase().as_str()) {
         // Shutdown connection.
-        request.shutdown(std::net::Shutdown::Both).unwrap();
+        stream.shutdown(std::net::Shutdown::Both).unwrap();
 
         logger::entry(2, "Got illegal HTTP method.".to_string(), false, true, true);
     }

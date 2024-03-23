@@ -30,12 +30,12 @@ use std::net::TcpStream;
 /// ...
 /// response::entry(...);
 /// ```
-pub fn entry(request: TcpStream, http_request: &str, client_address: &str, config: &Config) {
+pub fn entry(stream: TcpStream, http_request: &str, client_address: &str, config: &Config) {
     // Handle request.
     let request_param: RequestParam = request::entry(&client_address, &http_request);
 
     // Security check.
-    let request_param: RequestParam = security::entry(&client_address, request_param, request.try_clone().unwrap(), &config);
+    let request_param: RequestParam = security::entry(&client_address, request_param, stream.try_clone().unwrap(), &config);
 
     // Query parse.
     let request_param: RequestParam = queryparse::entry(request_param);
@@ -45,5 +45,5 @@ pub fn entry(request: TcpStream, http_request: &str, client_address: &str, confi
     // let request_param: RequestParam = anything::entry(request_param);
 
     // Response.
-    response::entry(request_param, request, &config);
+    response::entry(request_param, stream, &config);
 }
