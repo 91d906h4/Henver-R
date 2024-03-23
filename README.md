@@ -27,3 +27,7 @@ cargo run
 ### Error
 
 - [ ] Server hangs up when receiving URIs that are too long.
+
+## License
+
+<a href="https://github.com/91d906h4/Henver-R/blob/main/LICENSE">MIT License</a>
