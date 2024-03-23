@@ -21,6 +21,7 @@ cargo run
 
 ### Speed
 
+- [ ] Prefork
 - [ ] File Caching.
 - [ ] Banned IP filter re-write.
 
