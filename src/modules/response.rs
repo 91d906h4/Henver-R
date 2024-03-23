@@ -14,10 +14,7 @@ use chrono::prelude::Local;
 const ROOT: &str = "src/public/";
 const VERSION: &str = "1.1.0";
 
-pub fn entry(mut request_param: RequestParam, mut request: TcpStream) {
-    // Get configuration.
-    let config: Config = config::read();
-
+pub fn entry(mut request_param: RequestParam, mut request: TcpStream, config: &Config) {
     // Server name.
     let mut server_name: String = String::new();
     if config.server.append_ser_name == "enable" {

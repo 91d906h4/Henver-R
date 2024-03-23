@@ -1,4 +1,5 @@
 #![allow(unused_imports)]
+use crate::datastruct::Config;
 use crate::datastruct::RequestParam;
 use crate::modules::{
     request,
@@ -27,12 +28,12 @@ use std::net::TcpStream;
 /// ...
 /// response::entry(...);
 /// ```
-pub fn entry(request: TcpStream, http_request: &str, client_address: &str) {
+pub fn entry(request: TcpStream, http_request: &str, client_address: &str, config: &Config) {
     // Handle request.
     let request_param: RequestParam = request::entry(&client_address, &http_request);
 
     // Security check.
-    let request_param: RequestParam = security::entry(&client_address, request_param, request.try_clone().unwrap());
+    let request_param: RequestParam = security::entry(&client_address, request_param, request.try_clone().unwrap(), &config);
 
     // Query parse.
     let request_param: RequestParam = queryparse::entry(request_param);
@@ -42,5 +43,5 @@ pub fn entry(request: TcpStream, http_request: &str, client_address: &str) {
     // let request_param: RequestParam = anything::entry(request_param);
 
     // Response.
-    response::entry(request_param, request);
+    response::entry(request_param, request, &config);
 }

@@ -1,7 +1,6 @@
 // security.rs
 // A module for security check.
 
-use crate::config;
 use crate::logger;
 use crate::datastruct::{Config, RequestParam};
 
@@ -10,10 +9,7 @@ use urlencoding::decode;
 use std::net::TcpStream;
 use std::collections::HashSet;
 
-pub fn entry(client_address: &str, mut request_param: RequestParam, request: TcpStream) -> RequestParam {
-    // Get configuration.
-    let config: Config = config::read();
-
+pub fn entry(client_address: &str, mut request_param: RequestParam, request: TcpStream, config: &Config) -> RequestParam {
     // Check if client is banned.
     // if config.security.ban_ip_addr {
     //     let client_address = &client_address[0..client_address.find(':').unwrap_or(client_address.len())];
