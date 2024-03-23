@@ -24,6 +24,7 @@ cargo run
 - [ ] Prefork
 - [ ] File Caching.
 - [ ] Banned IP filter re-write.
+- [ ] Hard-coded config file.
 
 ### Error
 
