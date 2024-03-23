@@ -49,7 +49,7 @@ clear_url_penc  = true
 url_only_alnum  = true
 
 # Enable to banned connection from IP addresses in ./conf/banned_ip.txt.
-ban_ip_addr     = true
+ban_ip_addr     = false
 
 # Set the max length of URL to be accepted.
 # Set max_url_len to -1 to aceept all requests.

@@ -9,7 +9,10 @@ use datastruct::Config;
 use std::{
     thread,
     io::Read,
-    net::{TcpListener, TcpStream},
+    net::{
+        TcpListener,
+        TcpStream
+    },
 };
 
 fn main() {

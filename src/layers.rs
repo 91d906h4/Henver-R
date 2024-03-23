@@ -1,6 +1,8 @@
 #![allow(unused_imports)]
-use crate::datastruct::Config;
-use crate::datastruct::RequestParam;
+use crate::datastruct::{
+    Config,
+    RequestParam
+};
 use crate::modules::{
     request,
     security,

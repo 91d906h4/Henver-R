@@ -4,11 +4,13 @@
 use crate::config;
 use crate::datastruct::{Config, RequestParam};
 
-use std::fs;
-use std::io::Write;
-use std::path::Path;
-use std::net::TcpStream;
 use chrono::prelude::Local;
+use std::{
+    fs,
+    io::Write,
+    path::Path,
+    net::TcpStream,
+};
 
 // Set static value.
 const ROOT: &str = "src/public/";
