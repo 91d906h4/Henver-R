@@ -17,7 +17,7 @@ const VERSION: &str = "1.1.0";
 pub fn entry(mut request_param: RequestParam, mut request: TcpStream, config: &Config) {
     // Server name.
     let mut server_name: String = String::new();
-    if config.server.append_ser_name == "enable" {
+    if config.server.append_ser_name {
         server_name = format!("Server: Henver-R {}\r\n", VERSION);
     }
 

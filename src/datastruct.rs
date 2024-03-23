@@ -23,18 +23,18 @@ impl Config {
                 e500_page: String::new(),
                 e502_page: String::new(),
                 e503_page: String::new(),
-                append_ser_name: String::new(),
+                append_ser_name: true,
             },
             system: System {
                 encoding: String::new(),
-                logging: String::new(),
+                logging: true,
                 log_file_path: String::new(),
             },
             security: Security {
                 allowed_methods: String::new(),
-                dir_trav_filter: String::new(),
-                clear_url_penc: String::new(),
-                url_only_alnum: String::new(),
+                dir_trav_filter: true,
+                clear_url_penc: true,
+                url_only_alnum: true,
                 max_url_len: 0,
                 ban_ip_addr: true,
             },
@@ -55,22 +55,22 @@ pub struct Server {
     pub e500_page: String,
     pub e502_page: String,
     pub e503_page: String,
-    pub append_ser_name: String,
+    pub append_ser_name: bool,
 }
 
 #[derive(Clone, Deserialize)]
 pub struct System {
     pub encoding: String,
-    pub logging: String,
+    pub logging: bool,
     pub log_file_path: String,
 }
 
 #[derive(Clone, Deserialize)]
 pub struct Security {
     pub allowed_methods: String,
-    pub dir_trav_filter: String,
-    pub clear_url_penc: String,
-    pub url_only_alnum: String,
+    pub dir_trav_filter: bool,
+    pub clear_url_penc: bool,
+    pub url_only_alnum: bool,
     pub max_url_len: i32,
     pub ban_ip_addr: bool,
 }

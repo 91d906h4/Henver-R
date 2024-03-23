@@ -20,7 +20,7 @@ e502_page       = "/error_pages/502.html"
 e503_page       = "/error_pages/503.html"
 
 # Append server name ("Server: Raver") in the header.
-append_ser_name = "enable"
+append_ser_name = true
 
 # System
 [system]
@@ -28,7 +28,7 @@ append_ser_name = "enable"
 encoding        = "UTF-8"
 
 # Enable to log system events.
-logging         = "enable"
+logging         = true
 log_file_path   = "log.txt"
 
 # Security
@@ -40,13 +40,13 @@ log_file_path   = "log.txt"
 allowed_methods = "get,post"
 
 # Enable to filter or redirect the queries that tend to do directory traversal.
-dir_trav_filter = "enable"
+dir_trav_filter = true
 
 # Enable to decode and clear all URL percent-encoding characters.
-clear_url_penc  = "enable"
+clear_url_penc  = true
 
 # Enable to remove all characters in URL except a-z, A-Z, 0-1, _, ?, &, /, =, -, ., :, +, (, ), and #.
-url_only_alnum  = "enable"
+url_only_alnum  = true
 
 # Enable to banned connection from IP addresses in ./conf/banned_ip.txt.
 ban_ip_addr     = true

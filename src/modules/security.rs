@@ -47,7 +47,7 @@ pub fn entry(client_address: &str, mut request_param: RequestParam, request: Tcp
     }
 
     // Clear percenrage encoding.
-    if config.security.clear_url_penc == "enable" {
+    if config.security.clear_url_penc {
         let mut temp: String = request_param.query;
 
         // Remove all percentage encoding chars.
@@ -63,7 +63,7 @@ pub fn entry(client_address: &str, mut request_param: RequestParam, request: Tcp
     }
 
     // Clear illegal chars.
-    if config.security.url_only_alnum == "enable" {
+    if config.security.url_only_alnum {
         // Chars map.
         let map: HashSet<char> = HashSet::from([
             // 0 - 9
@@ -97,7 +97,7 @@ pub fn entry(client_address: &str, mut request_param: RequestParam, request: Tcp
     }
 
     // Filter directory traversal.
-    if config.security.dir_trav_filter == "enable" {
+    if config.security.dir_trav_filter {
         let mut temp: String = request_param.query;
 
         // Replace ".." and "//".
