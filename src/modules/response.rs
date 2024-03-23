@@ -57,6 +57,7 @@ fn content_reader(request_param: &mut RequestParam) -> Vec<u8> {
     if request_param.file == "/" {
         request_param.file = config.server.default_page;
         request_param.file_type = String::from("TXT");
+        request_param.content_type = String::from("text/html");
         request_param.http_code = 200;
     }
 
