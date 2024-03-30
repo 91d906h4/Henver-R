@@ -29,6 +29,7 @@ cargo run
 ### Error
 
 - [ ] Server hangs up when receiving URIs that are too long.
+- [ ] Check if any misconfigured when server startup.
 
 ## License
 
