@@ -56,7 +56,6 @@ fn index(mut stream: TcpStream, config: &Config) {
 
     // Get HTTP request.
     let http_request: String = String::from_utf8_lossy(&buffer).to_string();
-    println!("{}", http_request.len());
 
     // Enter layers.
     layers::entry(stream, &http_request, &client_address, &config);
