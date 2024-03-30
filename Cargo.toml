@@ -4,6 +4,7 @@ version = "1.1.0"
 edition = "2021"
 
 [dependencies]
+anyhow = { version = "1.0.81", features = ["backtrace"] }
 chrono = "0.4.35"
 serde = "1.0.136"
 serde_derive = "1.0.136"

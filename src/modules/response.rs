@@ -5,12 +5,9 @@ use crate::config;
 use crate::datastruct::{Config, RequestParam};
 
 use chrono::prelude::Local;
-use std::{
-    fs,
-    io::Write,
-    path::Path,
-    net::TcpStream,
-};
+use std::{fs, io::Write, net::TcpStream, path::Path};
+
+use anyhow::Result;
 
 // Set static value.
 const ROOT: &str = "src/public/";
@@ -24,7 +21,8 @@ pub fn entry(mut request_param: RequestParam, mut stream: TcpStream, config: &Co
     }
 
     // Get file contents.
-    let content: Vec<u8> = content_reader(&mut request_param);
+    let content: Vec<u8> =
+        content_reader(&mut request_param).unwrap_or(Vec::from(include_bytes!("500.html")));
 
     // Get now date.
     let date = Local::now().format("%Y/%m/%d %H:%M:%S%.3f");
@@ -35,8 +33,8 @@ pub fn entry(mut request_param: RequestParam, mut stream: TcpStream, config: &Co
         {}\
         Date: {}\r\n\
         Content-Type: {}\r\n\r\n",
-
-        request_param.http_code, status_message(request_param.http_code),
+        request_param.http_code,
+        status_message(request_param.http_code),
         server_name,
         date,
         request_param.content_type,
@@ -51,7 +49,7 @@ pub fn entry(mut request_param: RequestParam, mut stream: TcpStream, config: &Co
     stream.flush().unwrap();
 }
 
-fn content_reader(request_param: &mut RequestParam) -> Vec<u8> {
+fn content_reader(request_param: &mut RequestParam) -> Result<Vec<u8>> {
     // Get configuration.
     let config: Config = config::read();
 
@@ -66,17 +64,14 @@ fn content_reader(request_param: &mut RequestParam) -> Vec<u8> {
     // Check if error.
     if request_param.http_code != 200 {
         // Pass if error has already been detected.
-    }
-    else if request_param.file_type == "FOLDER" {
+    } else if request_param.file_type == "FOLDER" {
         // Pass if client request a folder.
         request_param.http_code = 403;
         request_param.content_type = String::from("text/html");
-    }
-    else if Path::new(format!("{}{}", ROOT, request_param.file).as_str()).exists() {
+    } else if Path::new(format!("{}{}", ROOT, request_param.file).as_str()).exists() {
         // Check if file exists.
         request_param.http_code = 200;
-    }
-    else {
+    } else {
         // Otherwise, return 404.
         request_param.http_code = 404;
         request_param.content_type = String::from("text/html");
@@ -105,14 +100,12 @@ fn content_reader(request_param: &mut RequestParam) -> Vec<u8> {
     if request_param.file_type == "TXT" {
         // Read as string if file is a text file.
         // (Only text file needs to be read as string)
-        return fs::read_to_string(format!("{}{}", ROOT, filepath)).unwrap().into();
-    }
-    else {
+        Ok(fs::read_to_string(format!("{}{}", ROOT, filepath))?.into())
+    } else {
         // Read as bytes if file is a media file (image, video, audio, and font)
         // or the file type is application or unknown.
-        return fs::read(format!("{}{}", ROOT, filepath)).unwrap();
+        Ok(fs::read(format!("{}{}", ROOT, filepath))?)
     }
-    
 }
 
 fn status_message(code: i16) -> &'static str {
