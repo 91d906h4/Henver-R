@@ -4,10 +4,9 @@
 use crate::config;
 use crate::datastruct::{Config, RequestParam};
 
+use anyhow::Result;
 use chrono::prelude::Local;
 use std::{fs, io::Write, net::TcpStream, path::Path};
-
-use anyhow::Result;
 
 // Set static value.
 const ROOT: &str = "src/public/";
@@ -22,7 +21,8 @@ pub fn entry(mut request_param: RequestParam, mut stream: TcpStream, config: &Co
 
     // Get file contents.
     let content: Vec<u8> =
-        content_reader(&mut request_param).unwrap_or(Vec::from(include_bytes!("500.html")));
+        content_reader(&mut request_param)
+        .unwrap_or(fs::read_to_string(format!("{}{}", ROOT, config.server.e500_page)).unwrap().into());
 
     // Get now date.
     let date = Local::now().format("%Y/%m/%d %H:%M:%S%.3f");

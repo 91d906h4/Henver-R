@@ -6,14 +6,7 @@ mod modules;
 mod datastruct;
 
 use datastruct::Config;
-use std::{
-    thread,
-    io::Read,
-    net::{
-        TcpListener,
-        TcpStream
-    },
-};
+use std::{thread, io::Read, net::{TcpListener, TcpStream}};
 
 fn main() {
     // Get configuration.
